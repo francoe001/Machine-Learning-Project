@@ -247,7 +247,7 @@ traitlets==4.3.2
 Twisted==18.9.0
 ua-parser==0.8.0
 unicodecsv==0.14.1
-urllib3==1.24.1
+urllib3==1.24.2
 virtualenv==16.4.3
 w3lib==1.20.0
 wasabi==0.4.0
