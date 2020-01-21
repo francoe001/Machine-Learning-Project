@@ -7,7 +7,7 @@ Created on Sat Dec  7 12:11:11 2019
 """
 import pandas as pd
 import flask
-from flask import request, jsonify, render_template, flash, session
+from flask import request, jsonify, render_template, flash, session, Markup
 from sklearn.metrics.pairwise import cosine_similarity
 from fuzzywuzzy import process, fuzz
 #from model import make_recommendations
@@ -27,7 +27,7 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/recs', methods=['POST'])
+@app.route('/recs', methods=['GET','POST'])
 def recommend():
     query = str(request.form.get('artist_name'))
     
@@ -51,8 +51,11 @@ def recommend():
     rest_of_entries['Dist'] = cosine_similarity(match, rest_of_entries)[0,:]
     
     recommendations = rest_of_entries.sort_values('Dist', ascending = False).head(10).index
+    rec_output = ' '
+    for rec in recommendations:
+        rec_output+='<br>' + rec + '</br>'
     
-    return flask.render_template('results.html', prediction=recommendations)
+    return flask.render_template('results.html', prediction=Markup(rec_output))
 
 
 
